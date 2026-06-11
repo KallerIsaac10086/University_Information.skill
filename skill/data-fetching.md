@@ -24,13 +24,17 @@
 
 ### 步骤 1：克隆仓库
 
-仓库约 228MB，首次使用时 clone 即可：
+使用 sparse checkout 只拉取 `school_reports_v2/` 目录（约 110MB），跳过 CSV/Parquet 等不需要的文件：
 
 ```bash
-git clone --depth 1 https://cnb.cool/Isaac80686/University_Information.git /tmp/University_Information
+mkdir /tmp/University_Information && cd /tmp/University_Information && \
+git init && git remote add origin https://cnb.cool/Isaac80686/University_Information.git && \
+git config core.sparseCheckout true && \
+echo "school_reports_v2/" >> .git/info/sparse-checkout && \
+git pull --depth 1 origin main
 ```
 
-后续只需 `git pull` 更新。
+后续只需 `git pull` 增量更新。
 
 ### 步骤 2：查找目标大学
 
@@ -78,7 +82,7 @@ school_reports_v2/{省码}_{省份名}/{序号}_{学校名}.md
 
 ## 6. 已知限制
 
-- 仓库约 228MB，首次 clone 即可，后续 git pull 增量更新
+- 使用 sparse checkout 只拉 `school_reports_v2/`，约 110MB
 - 部分大学的答卷数量可能较少（仅 1-3 份），统计意义有限
 - 数据主要来自在校生/校友的匿名投稿，不一定完全准确或最新
 - 评分仅基于公开的校友反馈，不包含官方数据
