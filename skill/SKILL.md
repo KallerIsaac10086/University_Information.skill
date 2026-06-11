@@ -35,7 +35,10 @@ description: "从 CNB 仓库 Isaac80686/University_Information 获取中国大�
 2. [获取数据]         → 参考 data-fetching.md 获取全部24个问题数据
 3. [计算评分]         → 参考 scoring-guide.md 逐项打分并计算综合指数
 4. [生成报告]         → 参考 report-template.md 输出完整报告
-5. [可选] 生成网页    → 主动询问用户是否需要生成精美可互动网页
+5. [产出MD文件]       → 将完整调研报告写入 MD 文件（产物交付）
+                        → 文件名格式：{大学拼音}-report.md
+                        → 例如：zhong-guo-zheng-fa-da-xue-report.md
+6. [可选] 生成网页    → 主动询问用户是否需要生成精美可互动网页
                         → 参考 webpage-generator.md 生成 HTML 文件
 ```
 
