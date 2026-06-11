@@ -4,9 +4,21 @@
 
 ---
 
+## 安装
+
+在 CodeBuddy 中对 AI 说：
+
+```
+安装这个 skill：https://cnb.cool/Isaac80686/University_Information.skill
+```
+
+AI 会自动从该仓库拉取并安装 Skill，无需手动下载或配置。
+
+---
+
 ## 快速开始
 
-在 CodeBuddy 中直接对 AI 说：
+安装后，在 CodeBuddy 中直接对 AI 说：
 
 ```
 帮我调研一下中国政法大学
