@@ -9,7 +9,7 @@
 让 AI 助手直接克隆本仓库并安装 skill 文件。对 AI 说：
 
 ```text
-克隆 https://cnb.cool/Isaac80686/University_Information.skill，把 skill/ 目录下的所有文件复制到当前项目的 skill 目录中。
+克隆 https://cnb.cool/Isaac80686/University_Information.skill，把 skill/ 目录下的所有文件复制到当前项目的 skill 目录中，并安装这个skill。
 ```
 
 各平台 skill 目录路径参考：
