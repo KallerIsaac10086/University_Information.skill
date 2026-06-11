@@ -1,3 +1,5 @@
 .kagent/
 .DS_Store
 .codebuddy/*
+*.zip
+*.gz

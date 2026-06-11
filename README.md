@@ -6,11 +6,9 @@
 
 ## 安装
 
-将仓库克隆到你的 AI 助手对应的 skill 目录即可：
+让 AI 助手直接克隆本仓库并安装 skill 文件。对 AI 说：
 
-```bash
-git clone https://cnb.cool/Isaac80686/University_Information.skill.git <你的skill目录>
-```
+> 克隆 `https://github.com/KallerIsaac10086/University_Information.skill`，把 `skill/` 目录下的所有文件复制到当前项目的 skill 目录中。
 
 各平台 skill 目录路径参考：
 
@@ -21,8 +19,6 @@ git clone https://cnb.cool/Isaac80686/University_Information.skill.git <你的sk
 | Cursor | `.cursor/skills/skill/` |
 | Copilot Chat | `.github/copilot/skills/skill/` |
 | Cline | `.cline/skills/skill/` |
-
-> 💡 也可以直接在 CodeBuddy 中对 AI 说：`安装这个 skill：https://cnb.cool/Isaac80686/University_Information.skill`，AI 会自动拉取安装。
 
 ---
 
