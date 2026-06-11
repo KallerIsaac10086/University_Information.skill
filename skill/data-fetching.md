@@ -24,13 +24,14 @@
 
 ### 步骤 1：克隆仓库
 
-使用 sparse checkout 只拉取 `school_reports_v2/` 目录（约 110MB），跳过 CSV/Parquet 等不需要的文件：
+使用 sparse checkout 只拉取 `school_reports_v2/` 和 `全国高校名单.md`（约 110MB），跳过 CSV/Parquet 等不需要的文件：
 
 ```bash
 mkdir /tmp/University_Information && cd /tmp/University_Information && \
 git init && git remote add origin https://cnb.cool/Isaac80686/University_Information.git && \
 git config core.sparseCheckout true && \
 echo "school_reports_v2/" >> .git/info/sparse-checkout && \
+echo "全国高校名单.md" >> .git/info/sparse-checkout && \
 git pull --depth 1 origin main
 ```
 
