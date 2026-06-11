@@ -27,7 +27,7 @@ description: "从 CNB 仓库 Isaac80686/University_Information 获取中国大�
 **每次被调用时**，在执行任何任务之前，必须先检查 Skill 自身是否有新版本：
 
 1. 读取远端仓库的最新提交：访问 `https://cnb.cool/Isaac80686/University_Information.skill` 查看最新 commit 信息
-2. 与本地 `.codebuddy/skills/skill/` 目录下的 `SKILL.md` 版本对比
+2. 与本地 skill 安装目录下的 `SKILL.md` 版本对比（按用户所用平台的安装路径查找）
 3. 如果有更新：
    - **先告知用户**：「检测到 Skill 有新版本可用，建议更新以获得最新功能和数据。是否现在更新？」
    - 用户确认后，重新拉取远端仓库文件覆盖本地 skill 目录

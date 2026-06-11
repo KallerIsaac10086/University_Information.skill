@@ -1,24 +1,34 @@
 # 🎓 大学信息获取 Skill
 
-基于 [cn.colleges.chat](https://cn.colleges.chat/)（大学生活质量指北）的 CodeBuddy Skill，用于调研中国大学校园生活条件，并生成综合评分报告和精美互动网页。
+基于 [cn.colleges.chat](https://cn.colleges.chat/)（大学生活质量指北）的 AI Skill，兼容 **CodeBuddy、Claude Code、Cursor、Copilot Chat、Cline** 等主流 AI 编程助手，用于调研中国大学校园生活条件，并生成综合评分报告和精美互动网页。
 
 ---
 
 ## 安装
 
-在 CodeBuddy 中对 AI 说：
+将仓库克隆到你的 AI 助手对应的 skill 目录即可：
 
-```
-安装这个 skill：https://cnb.cool/Isaac80686/University_Information.skill
+```bash
+git clone https://cnb.cool/Isaac80686/University_Information.skill.git <你的skill目录>
 ```
 
-AI 会自动从该仓库拉取并安装 Skill，无需手动下载或配置。
+各平台 skill 目录路径参考：
+
+| 平台 | Skill 安装路径 |
+|------|---------------|
+| CodeBuddy | `.codebuddy/skills/skill/` |
+| Claude Code | `.claude/skills/skill/` |
+| Cursor | `.cursor/skills/skill/` |
+| Copilot Chat | `.github/copilot/skills/skill/` |
+| Cline | `.cline/skills/skill/` |
+
+> 💡 也可以直接在 CodeBuddy 中对 AI 说：`安装这个 skill：https://cnb.cool/Isaac80686/University_Information.skill`，AI 会自动拉取安装。
 
 ---
 
 ## 快速开始
 
-安装后，在 CodeBuddy 中直接对 AI 说：
+安装后，对 AI 说：
 
 ```
 帮我调研一下中国政法大学
@@ -78,16 +88,12 @@ AI 会自动调用此 Skill，获取该大学在校友社区中的真实反馈�
 ## 文件结构
 
 ```
-/workspace
-├── .codebuddy/skills/skill/    # Skill 核心文件
-│   ├── SKILL.md                 # 入口：触发条件、流程概览
-│   ├── data-fetching.md         # 数据获取：URL slug、锚点对照表
-│   ├── scoring-guide.md         # 评分标准：逐项打分、计算公式
-│   ├── report-template.md       # Markdown 报告模板
-│   ├── webpage-generator.md     # 网页生成规则：评级映射、占位符
-│   └── report-template.html     # HTML 网页模板（最终稳定版）
-├── skill/                       # 旧版 skill 文件（legacy）
-└── README.md                    # 本文件
+├── SKILL.md                 # 入口：触发条件、流程概览
+├── data-fetching.md         # 数据获取：URL slug、锚点对照表
+├── scoring-guide.md         # 评分标准：逐项打分、计算公式
+├── report-template.md       # Markdown 报告模板
+├── webpage-generator.md     # 网页生成规则：评级映射、占位符
+└── README.md                # 本文件
 ```
 
 ---
