@@ -7,6 +7,8 @@ description: "从 CNB 仓库 Isaac80686/University_Information 获取中国大�
 
 从 CNB 仓库 [Isaac80686/University_Information](https://cnb.cool/Isaac80686/University_Information) 获取中国大学的校园生活问答信息（基于 **33,579 份**真实问卷，覆盖 **5,000+** 所院校），并可生成带综合评分的大学调研报告。
 
+> **数据来源**：[大学生活质量指北](https://colleges.chat/)（colleges.chat）社区用户匿名投稿，不代表学校官方立场，仅供参考，不构成报考或择校建议。
+
 ## 适用场景
 
 当用户询问以下类型的问题时调用此 skill：

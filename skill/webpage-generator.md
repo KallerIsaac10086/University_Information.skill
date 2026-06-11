@@ -327,8 +327,9 @@ body {
 
 <!-- ========== 页脚 ========== -->
 <footer class="footer">
-  <p>数据来源：<a href="https://cnb.cool/Isaac80686/University_Information" target="_blank">Isaac80686/University_Information（33,579份高校问卷）</a></p>
-  <p>评分基于校友公开反馈，仅供参考 · 生成时间：{{生成时间}}</p>
+  <p>数据来源：<a href="https://colleges.chat/" target="_blank">大学生活质量指北（colleges.chat）</a> · 33,579份高校问卷</p>
+  <p>⚠️ 评分基于校友匿名反馈，不代表学校官方立场，不构成报考或择校建议</p>
+  <p>生成时间：{{生成时间}}</p>
 </footer>
 
 <!-- ========== 回到顶部 ========== -->
