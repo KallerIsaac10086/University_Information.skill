@@ -17,6 +17,7 @@ description: "从 cn.colleges.chat（大学生活质量指北）获取中国大�
 - 早晚自习、晨跑、跑步打卡
 - 交通、快递、共享单车
 - **需要生成某大学的调研报告、综合评分**
+- **需要生成精美可互动的网页展示调研数据**
 - 其他校园生活质量相关问题
 
 ## 工作流程
@@ -30,10 +31,12 @@ description: "从 cn.colleges.chat（大学生活质量指北）获取中国大�
 当用户要求生成调研报告或综合评分时，执行以下完整流程：
 
 ```
-1. [询问优先级] → 问用户4个维度的权重分配
-2. [获取数据]   → 参考 data-fetching.md 获取全部24个问题数据
-3. [计算评分]   → 参考 scoring-guide.md 逐项打分并计算综合指数
-4. [生成报告]   → 参考 report-template.md 输出完整报告
+1. [询问优先级]       → 问用户4个维度的权重分配
+2. [获取数据]         → 参考 data-fetching.md 获取全部24个问题数据
+3. [计算评分]         → 参考 scoring-guide.md 逐项打分并计算综合指数
+4. [生成报告]         → 参考 report-template.md 输出完整报告
+5. [可选] 生成网页    → 主动询问用户是否需要生成精美可互动网页
+                        → 参考 webpage-generator.md 生成 HTML 文件
 ```
 
 ---
@@ -48,3 +51,4 @@ description: "从 cn.colleges.chat（大学生活质量指北）获取中国大�
 | `data-fetching.md` | 数据获取：URL slug、WebFetch、锚点对照表、截断处理 |
 | `scoring-guide.md` | 评分标准：逐项打分依据、计算公式、评级规则 |
 | `report-template.md` | 报告模板：输出格式、结构示例 |
+| `webpage-generator.md` | 精美网页生成器：可互动 HTML 模板、生成规则 |
