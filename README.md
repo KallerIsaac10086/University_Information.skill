@@ -8,7 +8,9 @@
 
 让 AI 助手直接克隆本仓库并安装 skill 文件。对 AI 说：
 
-> 克隆 `https://github.com/KallerIsaac10086/University_Information.skill`，把 `skill/` 目录下的所有文件复制到当前项目的 skill 目录中。
+```text
+克隆 https://github.com/KallerIsaac10086/University_Information.skill，把 skill/ 目录下的所有文件复制到当前项目的 skill 目录中。
+```
 
 各平台 skill 目录路径参考：
 
