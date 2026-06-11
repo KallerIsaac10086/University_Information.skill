@@ -1,11 +1,11 @@
 ---
 name: "大学信息获取skill"
-description: "从 cn.colleges.chat（大学生活质量指北）获取中国大学校园生活问答信息。当用户询问大学宿舍条件、查寝、门禁、空调、食堂等校园生活信息时调用。"
+description: "从 CNB 仓库 Isaac80686/University_Information 获取中国大学校园生活问答信息（33,579份问卷，覆盖5,000+院校）。当用户询问大学宿舍条件、查寝、门禁、空调、食堂等校园生活信息时调用。"
 ---
 
 # 大学信息获取skill
 
-从 [cn.colleges.chat](https://cn.colleges.chat/)（大学生活质量指北）网站获取中国大学的校园生活问答信息，并可生成带综合评分的大学调研报告。
+从 CNB 仓库 [Isaac80686/University_Information](https://cnb.cool/Isaac80686/University_Information) 获取中国大学的校园生活问答信息（基于 **33,579 份**真实问卷，覆盖 **5,000+** 所院校），并可生成带综合评分的大学调研报告。
 
 ## 适用场景
 
