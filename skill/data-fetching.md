@@ -1,6 +1,6 @@
 # 数据获取
 
-数据来源于 CNB 仓库 [Isaac80686/University_Information](https://cnb.cool/Isaac80686/University_Information)，该仓库包含 **33,579 份**高校校园生活真实问卷数据，覆盖 **5,000+** 所院校。
+数据来源于 **[大学生活质量指北](https://colleges.chat/)**（[colleges.chat](https://colleges.chat/)），这是一个收集中国高校校园生活真实反馈的社区平台。原始数据仓库为 [CollegesChat/university-information](https://github.com/CollegesChat/university-information)，CNB 镜像仓库 [Isaac80686/University_Information](https://cnb.cool/Isaac80686/University_Information) 包含 **33,579 份**高校校园生活真实问卷数据，覆盖 **5,000+** 所院校。
 
 ## 1. 仓库数据概览
 
@@ -81,9 +81,10 @@ school_reports_v2/{省码}_{省份名}/{序号}_{学校名}.md
 3. **如果多个回答不一致**，分别列出不同情况（如新校区 vs 老校区）
 4. **如果仓库中没有该大学的信息**，明确告知用户该大学暂未被收录
 
-## 6. 已知限制
+## 6. 已知限制与免责声明
 
 - 使用 sparse checkout 只拉 `school_reports_v2/`，约 110MB
 - 部分大学的答卷数量可能较少（仅 1-3 份），统计意义有限
 - 数据主要来自在校生/校友的匿名投稿，不一定完全准确或最新
 - 评分仅基于公开的校友反馈，不包含官方数据
+- **所有信息均来自 [colleges.chat](https://colleges.chat/) 社区用户投稿，不代表学校官方立场，不构成报考或择校建议**

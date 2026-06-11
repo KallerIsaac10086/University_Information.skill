@@ -23,7 +23,8 @@ AI 会自动调用此 Skill，获取该大学在校友社区中的真实反馈�
 | 🔍 **校园问答** | 查询某大学的宿舍、空调、卫浴、自习、门禁等具体问题 |
 | 📊 **综合评分** | 按住宿/学业/生活/自由四个维度打分，加权计算综合生存指数 |
 | 🏆 **调研报告** | 结构化 Markdown 报告，含逐项得分、校友引用、总结建议 |
-| 🌐 **互动网页** | Chart.js 雷达图 + 折叠明细 + 进度条动画，单文件可直接浏览器打开 |
+| 📄 **MD 产物交付** | 调研结束后自动输出 `.md` 文件作为最终交付物 |
+| 🌐 **互动网页** | 可选生成 Chart.js 雷达图 + 折叠明细 + 进度条动画网页 |
 
 ---
 
@@ -44,9 +45,20 @@ AI 会自动调用此 Skill，获取该大学在校友社区中的真实反馈�
 
 ## 数据来源
 
-- 原始数据：[GitHub - CollegesChat/university-information](https://github.com/CollegesChat/university-information)
-- 浏览网站：[cn.colleges.chat](https://cn.colleges.chat/)
-- 数据来自在校生/校友匿名投稿，仅供参考，非官方数据
+数据来源于 **[大学生活质量指北](https://colleges.chat/)**（[colleges.chat](https://colleges.chat/)），这是一个收集中国高校校园生活真实反馈的社区平台。
+
+- 原始数据仓库：[CollegesChat/university-information](https://github.com/CollegesChat/university-information)（CNB 镜像：`Isaac80686/University_Information`）
+- 问卷数据总量：33,579 份，覆盖 5,000+ 所院校
+
+---
+
+## ⚠️ 免责声明
+
+1. **非官方数据**：所有评分和报告内容均基于在校生/校友的匿名投稿，**不代表学校官方立场**，不构成任何报考或择校建议。
+2. **仅供参考**：数据可能存在偏差、过时或不完整，部分大学答卷数量较少（仅 1-3 份），统计意义有限。
+3. **主观性**：校友反馈具有主观性，同一学校的不同校区、不同年级可能有截然不同的体验。
+4. **不承担法律责任**：使用本 Skill 生成的任何报告、评分、网页，使用者应自行判断其准确性，开发者不承担因使用这些信息而产生的任何法律责任。
+5. **数据版权**：原始数据版权归 [colleges.chat](https://colleges.chat/) 及原作者所有，本 Skill 仅提供数据查询和可视化工具。
 
 ---
 
