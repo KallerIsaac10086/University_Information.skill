@@ -108,4 +108,4 @@ AI 会自动调用此 Skill，获取该大学在校友社区中的真实反馈�
 
 ## License
 
-MIT
+Apache-2.0
