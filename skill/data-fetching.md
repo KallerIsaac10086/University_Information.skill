@@ -22,43 +22,34 @@
 
 ## 2. 数据获取步骤
 
-### 步骤 1：下载全国高校目录
+### 步骤 1：克隆仓库
+
+仓库约 228MB，首次使用时 clone 即可：
 
 ```bash
-wget "https://cnb.cool/Isaac80686/University_Information/-/blob/main/%E5%85%A8%E5%9B%BD%E9%AB%98%E6%A0%A1%E5%90%8D%E5%8D%95.md"
+git clone --depth 1 https://cnb.cool/Isaac80686/University_Information.git /tmp/University_Information
 ```
 
-下载后用 `read_file` 读取内容，文件中按省份列出了所有已收录的高校及其路径。
-
-路径格式：`school_reports_v2/{省码}_{省份名}/{序号}_{学校名}.md`
+后续只需 `git pull` 更新。
 
 ### 步骤 2：查找目标大学
 
-在目录中搜索目标大学名称，找到对应的省份目录和文件名（含序号）。
+学校报告在 `school_reports_v2/` 目录下，按省份组织，路径格式：
 
-### 步骤 3：下载学校报告
-
-```bash
-wget "https://cnb.cool/Isaac80686/University_Information/-/blob/main/school_reports_v2/{省份编码}_{省份名}/{序号}_{学校名}.md"
+```
+school_reports_v2/{省码}_{省份名}/{序号}_{学校名}.md
 ```
 
-下载后直接 `read_file` 读取即可，内容就是 Markdown 格式的问卷数据。
+例如：`school_reports_v2/0004_北京/170_中国政法大学.md`
 
-**完整示例** — 获取中国政法大学报告：
+查找方式：
+- 有全国高校名单可参考：`cat 全国高校名单.md | grep 大学名`
+- 直接用 `find` 搜索：`find school_reports_v2 -name "*政法*"`
+- 用 `ls` 列出对应省份目录：`ls school_reports_v2/0004_北京/ | grep 政法`
 
-```bash
-wget "https://cnb.cool/Isaac80686/University_Information/-/blob/main/school_reports_v2/0004_%E5%8C%97%E4%BA%AC/170_%E4%B8%AD%E5%9B%BD%E6%94%BF%E6%B3%95%E5%A4%A7%E5%AD%A6.md"
-```
+### 步骤 3：读取学校报告
 
-### 步骤 4：如果目录中找不到目标大学
-
-用 wget 下载省份目录页面查找：
-
-```bash
-wget "https://cnb.cool/Isaac80686/University_Information/-/tree/main/school_reports_v2/{省份编码}_{省份名}" -O {省份}_dir.html
-```
-
-然后 `read_file` 读取，搜索目标大学文件名确定准确路径。
+找到路径后直接 `read_file` 读取，内容就是 Markdown 格式的问卷数据。
 
 ## 4. 学校报告内容结构
 
@@ -87,8 +78,7 @@ wget "https://cnb.cool/Isaac80686/University_Information/-/tree/main/school_repo
 
 ## 6. 已知限制
 
+- 仓库约 228MB，首次 clone 即可，后续 git pull 增量更新
 - 部分大学的答卷数量可能较少（仅 1-3 份），统计意义有限
 - 数据主要来自在校生/校友的匿名投稿，不一定完全准确或最新
 - 评分仅基于公开的校友反馈，不包含官方数据
-- 文件通过 CNB blob 路径直接用 wget 下载即可
-- `全国高校名单.md` 较大（~400KB），建议先下载再搜索；如果部分省份被截断，直接用 wget 列出对应省份目录来查找目标大学
