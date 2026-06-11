@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>中国政法大学 · 校园生活调研报告</title>
+<!-- Chart.js 双CDN兜底：jsdelivr -> unpkg -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"
+  onerror="var s=document.createElement('script');s.src='https://unpkg.com/chart.js@4.4.0/dist/chart.umd.min.js';document.head.appendChild(s);">
+</script>
+<style>
+/* ========== 基础样式 ========== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+  color: #e0e0e0;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ========== 导航栏 ========== */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: rgba(15, 12, 41, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding: 0 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 56px;
+}
+.navbar .logo { font-size: 1.1rem; font-weight: 700; color: #a78bfa; }
+.navbar .nav-links { display: flex; gap: 20px; list-style: none; }
+.navbar .nav-links a {
+  color: #ccc; text-decoration: none; font-size: 0.875rem;
+  transition: color 0.2s;
+}
+.navbar .nav-links a:hover { color: #a78bfa; }
+
+/* ========== 主容器 ========== */
+.container { max-width: 1200px; margin: 0 auto; padding: 80px 24px 60px; }
+
+/* ========== Hero 区 ========== */
+.hero {
+  text-align: center; padding: 60px 0 40px;
+}
+.hero .university-name {
+  font-size: 2.5rem; font-weight: 800; color: #fff;
+  background: linear-gradient(135deg, #a78bfa, #f472b6);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero .score-circle {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 160px; height: 160px; border-radius: 50%;
+  background: linear-gradient(135deg, rgba(167,139,250,0.2), rgba(244,114,182,0.2));
+  border: 4px solid rgba(167,139,250,0.5);
+  margin: 24px 0 12px;
+  flex-direction: column;
+}
+.hero .score-number {
+  font-size: 3.5rem; font-weight: 800;
+  background: linear-gradient(135deg, #a78bfa, #f472b6);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+}
+.hero .score-label { font-size: 0.85rem; color: #999; margin-top: 4px; }
+.hero .rating-badge {
+  display: inline-block; padding: 6px 20px; border-radius: 20px;
+  font-size: 1rem; font-weight: 600; margin-top: 8px;
+}
+.rating-badge.excellent { background: rgba(16,185,129,0.2); color: #10b981; border: 1px solid rgba(16,185,129,0.3); }
+.rating-badge.good     { background: rgba(59,130,246,0.2); color: #3b82f6; border: 1px solid rgba(59,130,246,0.3); }
+.rating-badge.average  { background: rgba(245,158,11,0.2); color: #f59e0b; border: 1px solid rgba(245,158,11,0.3); }
+.rating-badge.poor     { background: rgba(239,68,68,0.2); color: #ef4444; border: 1px solid rgba(239,68,68,0.3); }
+.rating-badge.hard     { background: rgba(107,114,128,0.2); color: #6b7280; border: 1px solid rgba(107,114,128,0.3); }
+
+/* ========== 区块标题 ========== */
+.section-title {
+  font-size: 1.6rem; font-weight: 700; color: #e0e0e0;
+  text-align: center; margin: 48px 0 28px;
+}
+.section-title::after {
+  content: ''; display: block; width: 60px; height: 3px;
+  background: linear-gradient(135deg, #a78bfa, #f472b6);
+  margin: 10px auto 0; border-radius: 2px;
+}
+
+/* ========== 雷达图容器 ========== */
+.chart-container {
+  max-width: 500px; margin: 0 auto;
+  background: rgba(255,255,255,0.03);
+  border-radius: 16px; padding: 24px;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+/* ========== 维度卡片 ========== */
+.dimension-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px; margin-top: 8px;
+}
+.dim-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px; padding: 24px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+.dim-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+}
+.dim-card .dim-icon { font-size: 2rem; margin-bottom: 8px; }
+.dim-card .dim-name { font-size: 1.1rem; font-weight: 700; color: #fff; }
+.dim-card .dim-score { font-size: 2rem; font-weight: 800; margin: 8px 0; }
+
+.dim-card .dim-weight { font-size: 0.8rem; color: #888; }
+.dim-card .progress-bar {
+  margin-top: 12px; height: 6px; border-radius: 3px;
+  background: rgba(255,255,255,0.08); overflow: hidden;
+}
+.dim-card .progress-fill {
+  height: 100%; border-radius: 3px;
+  transition: width 1s ease;
+}
+
+/* ========== 明细折叠面板 ========== */
+.detail-section { margin-top: 8px; }
+.detail-panel {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px; margin-bottom: 12px; overflow: hidden;
+}
+.detail-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 20px; cursor: pointer; user-select: none;
+  transition: background 0.2s;
+}
+.detail-header:hover { background: rgba(255,255,255,0.04); }
+.detail-header .header-left { display: flex; align-items: center; gap: 12px; }
+.detail-header .header-icon { font-size: 1.4rem; }
+.detail-header .header-title { font-size: 1.05rem; font-weight: 600; color: #e0e0e0; }
+.detail-header .header-score {
+  font-size: 0.9rem; font-weight: 700; padding: 2px 12px;
+  border-radius: 12px;
+}
+.detail-header .arrow {
+  font-size: 0.8rem; color: #666;
+  transition: transform 0.3s;
+}
+.detail-header.open .arrow { transform: rotate(180deg); }
+
+.detail-body {
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.4s ease;
+}
+.detail-body.expanded { max-height: 2000px; padding: 0 20px 20px; }
+
+.detail-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.detail-item:last-child { border-bottom: none; }
+.detail-item .item-label { color: #bbb; font-size: 0.9rem; min-width: 80px; }
+.detail-item .item-value { color: #888; font-size: 0.85rem; max-width: 45%; text-align: right; }
+.detail-item .item-score {
+  display: inline-block; min-width: 36px; text-align: center;
+  font-weight: 700; font-size: 0.9rem; margin-left: 8px;
+}
+.score-high  { color: #10b981; }
+.score-mid   { color: #f59e0b; }
+.score-low   { color: #ef4444; }
+
+/* ========== 总结区 ========== */
+.summary-box {
+  background: rgba(167,139,250,0.08);
+  border: 1px solid rgba(167,139,250,0.2);
+  border-radius: 16px; padding: 28px; margin-top: 8px;
+}
+.summary-box p { color: #ccc; margin-bottom: 12px; line-height: 1.8; }
+
+/* ========== 页脚 ========== */
+.footer {
+  text-align: center; padding: 40px 24px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  color: #666; font-size: 0.85rem; margin-top: 48px;
+}
+.footer a { color: #a78bfa; text-decoration: none; }
+
+/* ========== 回到顶部按钮 ========== */
+.back-to-top {
+  position: fixed; bottom: 32px; right: 32px;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(167,139,250,0.3);
+  border: 1px solid rgba(167,139,250,0.4);
+  color: #a78bfa; font-size: 1.2rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity 0.3s; z-index: 100;
+}
+.back-to-top.visible { opacity: 1; }
+
+/* ========== 响应式 ========== */
+@media (max-width: 768px) {
+  .hero .university-name { font-size: 1.6rem; }
+  .hero .score-number { font-size: 2.5rem; }
+  .hero .score-circle { width: 120px; height: 120px; }
+  .dimension-cards { grid-template-columns: 1fr; }
+  .navbar .nav-links { gap: 10px; }
+  .navbar .nav-links a { font-size: 0.75rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ========== 导航栏 ========== -->
+<nav class="navbar">
+  <div class="logo">🎓 大学调研</div>
+  <ul class="nav-links">
+    <li><a href="#hero">总览</a></li>
+    <li><a href="#chart">雷达图</a></li>
+    <li><a href="#dimensions">维度</a></li>
+    <li><a href="#details">明细</a></li>
+    <li><a href="#summary">总结</a></li>
+  </ul>
+</nav>
+
+<div class="container">
+
+<!-- ========== Hero 区 ========== -->
+<section id="hero" class="hero">
+  <h1 class="university-name">中国政法大学</h1>
+  <div class="score-circle">
+    <span class="score-number">7.58</span>
+    <span class="score-label">综合生存指数</span>
+  </div>
+  <div class="rating-badge good">
+    ⭐⭐⭐⭐ 良好（7-8分）
+  </div>
+</section>
+
+<!-- ========== 雷达图 ========== -->
+<section id="chart">
+  <h2 class="section-title">📊 四维度雷达图</h2>
+  <div class="chart-container">
+    <canvas id="radarChart" height="400"></canvas>
+  </div>
+</section>
+
+<!-- ========== 维度卡片 ========== -->
+<section id="dimensions">
+  <h2 class="section-title">📋 维度得分总览</h2>
+  <div class="dimension-cards" id="dimensionCards">
+    <!-- JS 动态生成 -->
+  </div>
+</section>
+
+<!-- ========== 详细明细 ========== -->
+<section id="details">
+  <h2 class="section-title">🔍 详细评分明细</h2>
+  <div class="detail-section" id="detailSection">
+    <!-- JS 动态生成 -->
+  </div>
+</section>
+
+<!-- ========== 总结 ========== -->
+<section id="summary">
+  <h2 class="section-title">💡 总结与建议</h2>
+  <div class="summary-box">
+    <p><strong>总体评价：</strong>中国政法大学是一所典型的「学术强但硬件差」的行业顶尖院校。综合生存指数 <strong>7.58 分</strong>，处于良好区间。学业自由度极高（无早晚自习、无晨跑、无跑步打卡、寒暑假名列全国前列），但住宿条件严重拖后腿，校园极小且位于昌平六环外。</p>
+    <p><strong>🏆 亮点：</strong>学业自主性极强，完全无强制性集体活动；寒暑假长约 50-60 天，小学期可选修；外卖、快递非常方便（步行 1-5 分钟即达）；管理宽松，不查寝、不出早操、上课基本不点名。法学师资和学术资源全国一流。</p>
+    <p><strong>⚠️ 短板：</strong>住宿为六人间上下铺，无独立卫浴，大澡堂限时供应热水（每天仅约 6-7 小时）；限电严格（200-300W），吹风机只能在水房使用；校园极小（"十分钟可达任意角落"），超市小且贵；位于昌平六环外，进城通勤 1.5-2 小时。</p>
+    <p><strong>🎯 权重建议：</strong>如果你最看重<strong>学业氛围</strong>（8.7分）和<strong>自由程度</strong>（7.8分），法大会让你满意，法学教育质量有口皆碑；但如果<strong>住宿条件</strong>（6.4分）是你的第一优先级，建议慎重考虑。"六人间上下铺+大澡堂"是校友最大的吐槽点。</p>
+    <p><strong>📊 横向对比：</strong>7.58 分在全国高校中处于中等偏上水平。在法学顶尖院校中，硬件条件远逊于人大、武大等综合性 985，但学术资源和日常管理自由度保持竞争力。校友高频忠告：<em>"非铁了心学法学且考不上人大法学的，慎重报考；非法学专业不建议来。"</em></p>
+  </div>
+</section>
+
+</div>
+
+<!-- ========== 页脚 ========== -->
+<footer class="footer">
+  <p>数据来源：<a href="https://cn.colleges.chat/" target="_blank">cn.colleges.chat（大学生活质量指北）</a></p>
+  <p>评分基于 20+ 条校友公开反馈，仅供参考 · 生成时间：2026-06-11 16:57</p>
+</footer>
+
+<!-- ========== 回到顶部 ========== -->
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+// ========== 所有数据 ==========
+const universityData = {
+  name: "中国政法大学",
+  overallScore: 7.58,
+  ratingLabel: "良好",
+  ratingClass: "good",
+  stars: "⭐⭐⭐⭐",
+  scoreRange: "7-8分",
+  generatedTime: "2026-06-11 16:57",
+  dimensions: [
+    {
+      id: "accommodation",
+      name: "住宿条件",
+      icon: "🏠",
+      score: 6.4,
+      weight: 0.25,
+      color: "#a78bfa",
+      items: [
+        { label: "上床下桌", value: "六人间上下铺，非上床下桌", score: 3 },
+        { label: "空调",     value: "教室和宿舍均有空调",     score: 10 },
+        { label: "独立卫浴", value: "无，大澡堂，步行2-5分钟", score: 6 },
+        { label: "洗衣机",   value: "每层楼2台，部分有洗鞋机",   score: 10 },
+        { label: "电瓶车",   value: "允许但学校太小无需骑车",   score: 10 },
+        { label: "限电",     value: "200-300W，严格限电",     score: 3 },
+        { label: "超市",     value: "仅一家物美，小且物价贵",     score: 3 }
+      ]
+    },
+    {
+      id: "academics",
+      name: "学业氛围",
+      icon: "🎓",
+      score: 8.7,
+      weight: 0.25,
+      color: "#60a5fa",
+      items: [
+        { label: "早晚自习", value: "无任何强制性自习", score: 10 },
+        { label: "晨跑",     value: "无晨跑",     score: 10 },
+        { label: "跑步打卡", value: "无跑步打卡要求", score: 10 },
+        { label: "通宵自习", value: "逸夫楼可用，条件一般", score: 6 },
+        { label: "带电脑",   value: "随便带，无任何限制",   score: 10 },
+        { label: "校园网",   value: "免费WiFi,时好时坏,0点断网",   score: 6 }
+      ]
+    },
+    {
+      id: "convenience",
+      name: "生活便利",
+      icon: "🎉",
+      score: 7.4,
+      weight: 0.25,
+      color: "#f59e0b",
+      items: [
+        { label: "外卖",     value: "允许，取餐仅1-5分钟",     score: 10 },
+        { label: "交通",     value: "有地铁但郊区，进城1.5-2h",     score: 6 },
+        { label: "食堂价格", value: "价格不贵，偶有异物报告", score: 6 },
+        { label: "热水供应", value: "中午+下午晚上，约6-7小时", score: 4 },
+        { label: "消费方式", value: "校园卡+虚拟卡，均可", score: 10 },
+        { label: "银行卡",   value: "统一办理中国银行卡",   score: 10 },
+        { label: "快递",     value: "地下通道统一收发，方便",     score: 10 },
+        { label: "共享单车", value: "无，整个昌平区都无", score: 3 }
+      ]
+    },
+    {
+      id: "freedom",
+      name: "自由程度",
+      icon: "🔓",
+      score: 7.8,
+      weight: 0.25,
+      color: "#f472b6",
+      items: [
+        { label: "断电断网",     value: "平时23:00断，周末0:00断",     score: 7 },
+        { label: "寒暑假",       value: "寒假50天，暑假50-60天",       score: 10 },
+        { label: "门禁",         value: "平时23:00，周末/期末0:00",         score: 7 },
+        { label: "查寝封寝晚归", value: "不查寝，封寝，晚归可叫阿姨", score: 7 }
+      ]
+    }
+  ],
+  summary: "详见总结区"
+};
+
+// ========== 渲染维度卡片 ==========
+function renderDimensionCards() {
+  const container = document.getElementById('dimensionCards');
+  universityData.dimensions.forEach(dim => {
+    const card = document.createElement('div');
+    card.className = 'dim-card';
+    card.onclick = () => {
+      document.getElementById('panel-' + dim.id).scrollIntoView({ behavior: 'smooth' });
+    };
+    card.innerHTML = `
+      <div class="dim-icon">${dim.icon}</div>
+      <div class="dim-name">${dim.name}</div>
+      <div class="dim-score" style="color:${dim.color}">${dim.score.toFixed(1)}<span style="font-size:0.9rem;color:#888">/10</span></div>
+      <div class="dim-weight">权重 ${(dim.weight * 100).toFixed(0)}% · 加权 ${(dim.score * dim.weight).toFixed(2)}</div>
+      <div class="progress-bar">
+        <div class="progress-fill" style="width:0%;background:${dim.color};" data-width="${dim.score * 10}%"></div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+  // 延迟执行进度条动画
+  setTimeout(() => {
+    document.querySelectorAll('.progress-fill').forEach(el => {
+      el.style.width = el.dataset.width;
+    });
+  }, 300);
+}
+
+// ========== 渲染明细面板 ==========
+function renderDetails() {
+  const container = document.getElementById('detailSection');
+  universityData.dimensions.forEach((dim, index) => {
+    const panel = document.createElement('div');
+    panel.className = 'detail-panel';
+    panel.id = 'panel-' + dim.id;
+
+    const header = document.createElement('div');
+    header.className = 'detail-header';
+    // 第一个默认展开
+    const isFirst = index === 0;
+    if (isFirst) header.classList.add('open');
+
+    header.innerHTML = `
+      <div class="header-left">
+        <span class="header-icon">${dim.icon}</span>
+        <span class="header-title">${dim.name}</span>
+        <span class="header-score" style="background:${dim.color}22;color:${dim.color}">${dim.score.toFixed(1)} / 10</span>
+      </div>
+      <span class="arrow">▼</span>
+    `;
+
+    const body = document.createElement('div');
+    body.className = 'detail-body';
+    if (isFirst) body.classList.add('expanded');
+
+    dim.items.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'detail-item';
+      let scoreClass = 'score-mid';
+      if (item.score >= 8) scoreClass = 'score-high';
+      else if (item.score <= 4) scoreClass = 'score-low';
+      div.innerHTML = `
+        <span class="item-label">${item.label}</span>
+        <span class="item-value">${item.value}</span>
+        <span class="item-score ${scoreClass}">${item.score}</span>
+      `;
+      body.appendChild(div);
+    });
+
+    header.addEventListener('click', () => {
+      header.classList.toggle('open');
+      body.classList.toggle('expanded');
+    });
+
+    panel.appendChild(header);
+    panel.appendChild(body);
+    container.appendChild(panel);
+  });
+}
+
+// ========== 绘制雷达图 ==========
+function renderRadarChart() {
+  if (typeof Chart === 'undefined') {
+    var canvas = document.getElementById('radarChart');
+    if (canvas) {
+      canvas.style.display = 'none';
+      var fallback = document.createElement('p');
+      fallback.style.cssText = 'text-align:center;color:#888;padding:40px';
+      fallback.textContent = '⚠️ 雷达图加载失败，请检查网络后刷新页面';
+      canvas.parentNode.appendChild(fallback);
+    }
+    return;
+  }
+  const ctx = document.getElementById('radarChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'radar',
+    data: {
+      labels: universityData.dimensions.map(d => d.name),
+      datasets: [{
+        label: '维度得分',
+        data: universityData.dimensions.map(d => d.score),
+        backgroundColor: 'rgba(167,139,250,0.2)',
+        borderColor: 'rgba(167,139,250,0.8)',
+        borderWidth: 2,
+        pointBackgroundColor: universityData.dimensions.map(d => d.color),
+        pointBorderColor: '#fff',
+        pointBorderWidth: 2,
+        pointRadius: 5,
+        pointHoverRadius: 7
+      }]
+    },
+    options: {
+      responsive: true,
+      animation: { duration: 1200, easing: 'easeOutQuart' },
+      scales: {
+        r: {
+          beginAtZero: true,
+          max: 10,
+          min: 0,
+          ticks: {
+            stepSize: 2,
+            color: '#666',
+            backdropColor: 'transparent',
+            font: { size: 11 }
+          },
+          grid: { color: 'rgba(255,255,255,0.1)' },
+          angleLines: { color: 'rgba(255,255,255,0.1)' },
+          pointLabels: {
+            color: '#ccc',
+            font: { size: 13, weight: 'bold' }
+          }
+        }
+      },
+      plugins: {
+        legend: { display: false }
+      }
+    }
+  });
+}
+
+// ========== 回到顶部按钮 ==========
+function initBackToTop() {
+  const btn = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => {
+    btn.classList.toggle('visible', window.scrollY > 400);
+  });
+}
+
+// ========== 导航锚点平滑滚动 ==========
+function initNavLinks() {
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+}
+
+// ========== 初始化 ==========
+document.addEventListener('DOMContentLoaded', () => {
+  renderDimensionCards();
+  renderDetails();
+  renderRadarChart();
+  initBackToTop();
+  initNavLinks();
+});
+</script>
+
+</body>
+</html>
